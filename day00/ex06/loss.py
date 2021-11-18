@@ -2,44 +2,21 @@ import numpy as np
 
 def predict_(x, theta):
 	new_row = np.ones(len(x), dtype=np.int8)
-	result = np.dot(np.hstack((np.transpose([new_row]), np.transpose([x]))), theta)
-	#result = np.dot(np.hstack((np.transpose([new_row]), x)), theta) #without the transpose
+	result = np.dot(np.hstack((np.transpose([new_row]), x)), theta) #without the transpose
+	#result = np.dot(np.hstack((np.transpose([new_row]), np.transpose([x]))), theta)
 	return result
 
 def loss_elem_(y, y_hat):
 	result = []
-	print(y_hat)
-	for where in range(len(y_hat)):
-		for index, i in enumerate(y):
-			temp = 0
-			#print(i,y_hat[index])
-			# if index == 0:
-			# 	continue
-			temp += (np.square(y_hat[index] - i))
-		result.append(temp)
-		sum = where
-		while (sum):
-			sum -= 1
-			result[where] += result[sum]
+	for index, i in enumerate(y):
+		result.append(pow(y_hat[index] - i, 2))
 	return result
 
 def loss_(y, y_hat):
-	sup_result = 0.0
-	result = []
-	print(y_hat)
-	for where in range(len(y_hat)):
-		for index, i in enumerate(y):
-			temp = 0
-			#print(i,y_hat[index])
-			# if index == 0:
-			# 	continue
-			temp += (np.square(y_hat[index] - i))
-		result.append(temp / (2 * len(y_hat)))
-		sum = where
-		while (sum):
-			sum -= 1
-			sup_result += result[sum]
-	return sup_result
+	result = 0
+	for index, i in enumerate(y):
+		result += pow(y_hat[index] - i, 2)
+	return result / (2 * len(y_hat))
 
 x1 = np.array([[0.], [1.], [2.], [3.], [4.]])
 theta1 = np.array([[2.], [4.]])
@@ -47,16 +24,19 @@ theta1 = np.array([[2.], [4.]])
 # print(x1)
 # print(theta1)
 
-#y_hat1 = predict_(x1, theta1)
+y_hat1 = predict_(x1, theta1)
 y1 = np.array([[2.], [7.], [12.], [17.], [22.]])
-# print(y1)
-# print ("--------------")
-# print(y_hat1)
-#print(loss_elem_(y1, y_hat1))
+print(loss_elem_(y1, y_hat1))
 
+# x2 = np.array([[0.2, 2., 20.], [0.4, 4., 40.], [0.6, 6., 60.], [0.8, 8., 80.]])
+# theta2 = np.array([[0.05], [1.], [1.], [1.]])
+# y_hat2 = predict_(x2, theta2)
+# y_hat2v2 = simple_predict(x2, theta2)
+# y2 = np.array([[19.], [42.], [67.], [93.]])
+# print(loss_(y2, y_hat2))
 
-x3 = np.array([0, 15, -9, 7, 12, 3, -21])
-theta3 = np.array([[0.], [1.]])
-y_hat3 = predict_(x3, theta3)
-y3 = np.array([2, 14, -13, 5, 12, 4, -19])
-loss_(y3, y_hat3)
+# x3 = np.array([0, 15, -9, 7, 12, 3, -21])
+# theta3 = np.array([[0.], [1.]])
+# y_hat3 = predict_(x3, theta3)
+# y3 = np.array([2, 14, -13, 5, 12, 4, -19])
+# print (loss_(y3, y_hat3))
