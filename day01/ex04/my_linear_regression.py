@@ -9,6 +9,7 @@ class MyLinearRegression():
 		result = []
 		for index, i in enumerate(y):
 			result.append(pow(y_hat[index] - i, 2))
+		return result
 	def mse_(self, y, y_hat):
 		result = 0.0
 		for index, i in enumerate(y):
